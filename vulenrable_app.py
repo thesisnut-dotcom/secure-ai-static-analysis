@@ -1,11 +1,19 @@
 import subprocess
-iport hashlib
+iport os
 
-password = input("Enter password: ")
+# 1. Define the path to your uploaded dataset
+data_file =  "data set.doc"
 
-hashed = hashlib.md5(password.encode()).hexdigest()
+if os.path.exists(data_file):
+# 2. Load the data
+df = pd.read_doc(data_file)
 
-filename = input("Enter filename: ")
-subprocess.call("cat " + filename, shell=True)
+# 3. Perform basic statistical analysis
+print("--- Dataset Summary ---")
+print(df.head()) # Shows the first 5 rows
 
-print("Passoword hash:", hashed) 
+print("\n--- Statistics ---")
+print(df.describe()) # Shows mean, count, std dev, etc.
+
+else:
+print(f"Error: The file '{data_file}' was not found in the repository.")
