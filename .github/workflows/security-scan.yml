@@ -1,28 +1,17 @@
-name: Security and Quality Scan
-
-on: [push, pull_request]
-
+name: Security Scan
+on: [push]
 jobs:
 scan:
 runs-on: ubuntu-latest
 steps:
-- name: Checkout code
-uses: actions/checkout@v4
-
+- uses: actions/checkout@v4
 - name: Set up Python
 uses: actions/setup-python@v4
 with:
 python-version: '3.10'
-
-- name: Install Tools
+- name: Run Scans
 run: |
 pip install bandit semgrep pylint
-
-- name: Run Bandit (Security)
-run: bandit -r . -f txt
-
-- name: Run Semgrep (Vulnerability Logic)
-run: semgrep --config=auto .
-
-- name: Run Pylint (Code Quality)
-run: pylint vulnerable_app.py --exit-zero
+bandit -r .
+semgrep --config=auto .
+pylint vulnerable_app.py --exit-zero
