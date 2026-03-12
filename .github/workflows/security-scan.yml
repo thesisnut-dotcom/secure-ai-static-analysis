@@ -10,7 +10,7 @@ jobs:
       with:
         python-version: '3.10'
     - name: Install Tools
-      run: pip install bandit semgrep pylint
+      run: pip install bandit semgrep pylint pandas
     - name: Run Bandit
       run: bandit -r .
     - name: Run Semgrep
