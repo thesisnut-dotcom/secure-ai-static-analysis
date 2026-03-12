@@ -1,20 +1,35 @@
-import pandas as pd
+import pickle
 import os
+import subprocess
+import hashlib
+import pandas as pd
 
-# 1. Define the path to your uploaded dataset
-data_file = "_55b0420cd5644c0cbe89a84bf91f3c8b_demo_code_1.txt"
+# --- SECTION 1: AI SECURITY DEMO (Your current logic) ---
+class MaliciousModel:
+def __reduce__(self):
+return (os.system, ('echo "Vulnerable"',))
 
-if os.path.exists(data_file):
-# 2. Load the data
-df = pd.read_txt(data_file)
+with open('model.pkl', 'wb') as f:
+pickle.dump(MaliciousModel(), f)
 
-# 3. Perform basic statistical analysis
-print("--- Dataset Summary ---")
-print(df.head()) # Shows the first 5 rows
+# VULNERABILITY 1: Insecure Deserialization (Pickle)
+# Bandit/Semgrep WILL catch this.
+with open('model.pkl', 'rb') as f:
+model = pickle.load(f)
 
-print("\n--- Statistics ---")
-print(df.describe()) # Shows mean, count, std dev, etc.
+# --- SECTION 2: CLASSIC WEB/SYSTEM VULNERABILITIES ---
+# Adding these ensures your "Security Pipeline" requirements are met!
 
-else:
-print(f"Error: The file '{data_file}' was not found in the repository.")
+# VULNERABILITY 2: Weak Cryptography (MD5)
+# Bandit flags this as a High Severity risk.
+password = "admin_password"
+print("Hash:", hashlib.md5(password.encode()).hexdigest())
 
+# VULNERABILITY 3: Command Injection (shell=True)
+# Semgrep and Bandit both flag this.
+user_input = "data.csv"
+subprocess.call("ls " + user_input, shell=True)
+
+# --- SECTION 3: DATA ANALYSIS ---
+df = pd.read_csv("data.csv")
+print(df.describe())
