@@ -1,6 +1,6 @@
 name: Security and Quality Scan
 
-on; [push, pull, request]
+on: [push, pull, request]
 
 jobs:
   scan:
