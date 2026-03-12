@@ -19,10 +19,10 @@ jobs:
         pip install bandit semgrep pylint
 
     - name: Run Bandit (Security)
-      run: bandit -r , -f txt
+      run: bandit -r . -f txt
 
     - name: Run Semgrep (vulnerability Logic) 
-      run: semgrep --config=auto
+      run: semgrep --config=auto .
 
     - name: run Pylint (Code Quality)
       run: pylint vulnerable_app.py --exit-zero
