@@ -12,8 +12,10 @@ jobs:
     - name: Install Tools
       run: pip install bandit semgrep pylint pandas
     - name: Run Bandit
-      run: bandit -r .
+      run: bandit -r . -11 -ii
+      # -11 means "report all levels", -ii means "report all confidence"
     - name: Run Semgrep
-      run: semgrep --config=auto .
+      run: semgrep --config=auto --error .
+      # --error ensures it stops and reports every match it finds
     - name: Run Pylint
       run: pylint vulnerable_app.py --exit-zero
