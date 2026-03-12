@@ -1,20 +1,19 @@
 name: Security Scan
 on: [push]
 jobs:
-scan:
-runs-on: ubuntu-latest
-steps:
-- name: Checkout Code
-uses: actions/checkout@v4
-- name: Set up Python
-uses: actions/setup-python@v4
-with:
-python-version: '3.10'
-- name: Install Tools
-run: pip install bandit semgrep pylint
-- name: Run Bandit
-run: bandit -r .
-- name: Run Semgrep
-run: semgrep --config=auto .
-- name: Run Pylint
-run: pylint vulnerable_app.py --exit-zero
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4 
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: Install Tools
+      run: pip install bandit semgrep pylint
+    - name: Run Bandit
+      run: bandit -r .
+    - name: Run Semgrep
+      run: semgrep --config=auto .
+    - name: Run Pylint
+      run: pylint vulnerable_app.py --exit-zero
